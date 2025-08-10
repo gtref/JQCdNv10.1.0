@@ -1,0 +1,12 @@
+/**
+ * JQCdN v10.1.0
+ * A simple stylesheet for demonstrating CDN functionality.
+ */
+
+.jqcdn-hello {
+  color: #007bff;
+  border: 1px solid #007bff;
+  padding: 10px;
+  border-radius: 5px;
+  display: inline-block;
+}

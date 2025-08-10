@@ -1,1 +1,77 @@
-# JQCdNv10.1.0
+# JQCdN v10.1.0
+
+JQCdN is a simple JavaScript library and CSS stylesheet that demonstrates how to create a CDN-like project. It provides a small set of jQuery-like functions for DOM manipulation and a few basic CSS styles.
+
+## Usage
+
+To use JQCdN in your project, you can include the `jqcdn.js` and `jqcdn.css` files in your HTML file.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JQCdN Example</title>
+  <link rel="stylesheet" href="jqcdn.css">
+</head>
+<body>
+
+  <h1 id="my-heading">Hello, World!</h1>
+  <button id="my-button">Click Me</button>
+
+  <script src="jqcdn.js"></script>
+  <script>
+    // Example usage:
+    var heading = JQCdN.get('#my-heading');
+    heading.addClass('jqcdn-hello');
+
+    var button = JQCdN.get('#my-button');
+    button.on('click', function() {
+      alert('Button clicked!');
+    });
+  </script>
+
+</body>
+</html>
+```
+
+## CDN
+
+You can use JQCdN as a CDN by serving the files directly from this GitHub repository using a service like [jsDelivr](https://www.jsdelivr.com/).
+
+To get the CDN links, use the following format:
+
+```
+https://cdn.jsdelivr.net/gh/{user}/{repo}@{version}/{file}
+```
+
+Replace `{user}`, `{repo}`, and `{version}` with your GitHub username, repository name, and the desired version (e.g., a git tag or commit hash).
+
+For example, to use version 10.1.0 of the files from this repository, you would use the following links:
+
+**CSS:**
+```
+https://cdn.jsdelivr.net/gh/your-username/your-repo-name@v10.1.0/jqcdn.css
+```
+
+**JavaScript:**
+```
+https://cdn.jsdelivr.net/gh/your-username/your-repo-name@v10.1.0/jqcdn.js
+```
+
+**Note:** You will need to replace `your-username` and `your-repo-name` with the actual username and repository name. You will also need to create a git tag for the version you want to use (e.g., `v10.1.0`).
+
+## API
+
+### `JQCdN.get(selector)`
+
+Selects one or more elements from the DOM using a CSS selector.
+
+- If one element is found, it returns an `Element` object.
+- If multiple elements are found, it returns an `ElementCollection` object.
+- If no elements are found, it returns `null`.
+
+### `Element` and `ElementCollection` Methods
+
+- `.addClass(className)`: Adds a class to the selected element(s).
+- `.removeClass(className)`: Removes a class from the selected element(s).
+- `.on(eventName, handler)`: Attaches an event listener to the selected element(s).
