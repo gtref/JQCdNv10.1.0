@@ -31,6 +31,11 @@
         return this;
     };
 
+    Element.prototype.html = function(htmlString) {
+        this.el.innerHTML = htmlString;
+        return this;
+    };
+
     // A wrapper for a collection of DOM elements
     function ElementCollection(nodes) {
         this.nodes = [];
@@ -42,6 +47,13 @@
     ElementCollection.prototype.addClass = function(className) {
         this.nodes.forEach(function(node) {
             node.addClass(className);
+        });
+        return this;
+    };
+
+    ElementCollection.prototype.html = function(htmlString) {
+        this.nodes.forEach(function(node) {
+            node.html(htmlString);
         });
         return this;
     };
@@ -70,6 +82,20 @@
       } else {
           return new ElementCollection(elements);
       }
+    };
+
+    JQCdN.template = function(templateString) {
+      return function(data) {
+        return templateString.replace(/\{\{([^}]+)\}\}/g, function(match, key) {
+          var keys = key.trim().split('.');
+          var value = data;
+          for (var i = 0; i < keys.length; i++) {
+            if (value === undefined) break;
+            value = value[keys[i]];
+          }
+          return value || '';
+        });
+      };
     };
 
     JQCdN.hello = function() {

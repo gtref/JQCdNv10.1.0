@@ -34,6 +34,37 @@ To use JQCdN in your project, you can include the `jqcdn.js` and `jqcdn.css` fil
 </html>
 ```
 
+## Templating
+
+JQCdN includes a simple templating engine to help you create dynamic content.
+
+### `JQCdN.template(templateString)`
+
+This function takes a template string with `{{placeholders}}` and returns a template function. The template function can then be called with a data object to generate the final HTML.
+
+### `.html(htmlString)`
+
+This method, available on `Element` and `ElementCollection` objects, sets the `innerHTML` of the selected element(s).
+
+### Example
+
+```html
+<div id="user-profile"></div>
+
+<script>
+  var user = {
+    name: 'John Doe',
+    email: 'john.doe@example.com'
+  };
+
+  var templateString = '<h2>{{ name }}</h2><p>{{ email }}</p>';
+  var template = JQCdN.template(templateString);
+  var html = template(user);
+
+  JQCdN.get('#user-profile').html(html);
+</script>
+```
+
 ## CDN
 
 You can use JQCdN as a CDN by serving the files directly from this GitHub repository using a service like [jsDelivr](https://www.jsdelivr.com/).
@@ -75,3 +106,4 @@ Selects one or more elements from the DOM using a CSS selector.
 - `.addClass(className)`: Adds a class to the selected element(s).
 - `.removeClass(className)`: Removes a class from the selected element(s).
 - `.on(eventName, handler)`: Attaches an event listener to the selected element(s).
+- `.html(htmlString)`: Sets the inner HTML of the selected element(s).
