@@ -103,7 +103,19 @@ Selects one or more elements from the DOM using a CSS selector.
 
 ### `Element` and `ElementCollection` Methods
 
+#### Manipulation
+- `.html(htmlString)`: Gets the HTML contents of the first element or sets the HTML contents of all selected elements.
+- `.text(textString)`: Gets the text content of the first element or sets the text content of all selected elements.
+- `.css(prop, value)`: Gets the value of a style property for the first element, or sets one or more CSS properties for all selected elements.
 - `.addClass(className)`: Adds a class to the selected element(s).
 - `.removeClass(className)`: Removes a class from the selected element(s).
+
+#### Events
 - `.on(eventName, handler)`: Attaches an event listener to the selected element(s).
-- `.html(htmlString)`: Sets the inner HTML of the selected element(s).
+
+#### Traversal
+- `.find(selector)`: Gets the descendants of each element in the current set of matched elements, filtered by a selector.
+- `.parent()`: Gets the parent of each element in the current set of matched elements.
+- `.children()`: Gets the children of each element in the current set of matched elements.
+- `.siblings()`: Gets the siblings of each element in the current set of matched elements.
+- `.closest(selector)`: For each element in the set, gets the first element that matches the selector by testing the element itself and traversing up through its ancestors in the DOM tree.
