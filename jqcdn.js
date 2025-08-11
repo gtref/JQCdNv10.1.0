@@ -67,7 +67,8 @@
     };
 
     Element.prototype.parent = function() {
-        return this.el.parentElement ? new Element(this.el.parentElement) : null;
+        var parent = this.el.parentElement;
+        return new ElementCollection(parent ? [parent] : []);
     };
 
     Element.prototype.children = function() {
@@ -86,7 +87,7 @@
 
     Element.prototype.closest = function(selector) {
         var closestEl = this.el.closest(selector);
-        return closestEl ? new Element(closestEl) : null;
+        return new ElementCollection(closestEl ? [closestEl] : []);
     };
 
     // A wrapper for a collection of DOM elements
@@ -206,13 +207,7 @@
 
     JQCdN.get = function(selector) {
       var elements = document.querySelectorAll(selector);
-      if (elements.length === 0) {
-          return null;
-      } else if (elements.length === 1) {
-          return new Element(elements[0]);
-      } else {
-          return new ElementCollection(elements);
-      }
+      return new ElementCollection(Array.from(elements));
     };
 
     JQCdN.template = function(templateString) {
@@ -227,6 +222,46 @@
           return value || '';
         });
       };
+    };
+
+    JQCdN.ajax = function(options) {
+        var url = options.url;
+        var method = options.method || 'GET';
+        var success = options.success || function() {};
+        var error = options.error || function() {};
+        var data = options.data || null;
+
+        var fetchOptions = {
+            method: method,
+            headers: {}
+        };
+
+        if (data) {
+            if (typeof data === 'object') {
+                fetchOptions.body = JSON.stringify(data);
+                fetchOptions.headers['Content-Type'] = 'application/json';
+            } else {
+                fetchOptions.body = data;
+            }
+        }
+
+        fetch(url, fetchOptions)
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                var contentType = response.headers.get('content-type');
+                if (contentType && contentType.indexOf('application/json') !== -1) {
+                    return response.json();
+                }
+                return response.text();
+            })
+            .then(function(data) {
+                success(data);
+            })
+            .catch(function(err) {
+                error(err);
+            });
     };
 
     JQCdN.hello = function() {

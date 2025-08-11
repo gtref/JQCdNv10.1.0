@@ -34,6 +34,20 @@ To use JQCdN in your project, you can include the `jqcdn.js` and `jqcdn.css` fil
 </html>
 ```
 
+## CSS Utility Library
+
+`jqcdn.css` is a minimal, utility-first CSS library to help you style your projects without writing custom CSS. It includes helpers for:
+
+- **Display:** `d-flex`, `d-grid`, `d-none`, etc.
+- **Flexbox:** `flex-col`, `items-center`, `justify-between`, etc.
+- **Spacing:** Margin and padding utilities like `m-4` (1rem) and `p-2` (0.5rem).
+- **Sizing:** `w-full`, `h-screen`, etc.
+- **Typography:** `text-lg`, `font-bold`, `text-center`, etc.
+- **Colors:** A simple palette for text and background colors.
+- **Borders:** `border`, `rounded-lg`, etc.
+
+You can inspect the `jqcdn.css` file to see all available classes.
+
 ## Templating
 
 JQCdN includes a simple templating engine to help you create dynamic content.
@@ -95,11 +109,31 @@ https://cdn.jsdelivr.net/gh/your-username/your-repo-name@v10.1.0/jqcdn.js
 
 ### `JQCdN.get(selector)`
 
-Selects one or more elements from the DOM using a CSS selector.
+Selects elements from the DOM using a CSS selector and returns an `ElementCollection` that can be chained with other methods. This collection is chainable even if no elements are found.
 
-- If one element is found, it returns an `Element` object.
-- If multiple elements are found, it returns an `ElementCollection` object.
-- If no elements are found, it returns `null`.
+### `JQCdN.ajax(options)`
+
+Performs an asynchronous HTTP (Ajax) request. It's a simple wrapper around the `fetch` API.
+
+**Options:**
+- `url`: The URL to request.
+- `method`: The HTTP method (e.g., 'GET', 'POST'). Defaults to 'GET'.
+- `data`: Data to be sent to the server. It is converted to a JSON string if it's an object.
+- `success`: A function to be called if the request succeeds. It receives the response data (parsed as JSON if possible).
+- `error`: A function to be called if the request fails.
+
+**Example:**
+```javascript
+JQCdN.ajax({
+  url: 'https://api.example.com/data',
+  success: function(data) {
+    console.log(data);
+  },
+  error: function(err) {
+    console.error('Request failed', err);
+  }
+});
+```
 
 ### `Element` and `ElementCollection` Methods
 
