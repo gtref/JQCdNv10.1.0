@@ -1,296 +1,141 @@
 /**
- * JQCdN v10.1.0
- * A simple library for demonstrating CDN functionality.
+ * JQCdN v10.2.0 (based on Refined-Query)
+ * A modern, lightweight, zero-dependency alternative to jQuery.
  */
-
 (function(window) {
-  'use strict';
+    'use strict';
 
-  function define_jqcdn() {
-    var JQCdN = {};
+    class QueryWrapper {
+        constructor(selector) {
+            if (!selector) { this.elements = []; return; }
+            if (selector instanceof QueryWrapper) { return selector; }
+            if (typeof selector === 'string') { this.elements = Array.from(document.querySelectorAll(selector.trim())); }
+            else if (selector.nodeType || selector === window) { this.elements = [selector]; }
+            else { this.elements = Array.from(selector); }
+        }
 
-    JQCdN.version = '10.1.0';
+        get length() { return this.elements.length; }
+        each(callback) { this.elements.forEach((el, i) => callback.call(el, i, el)); return this; }
+        first() { return new QueryWrapper(this.elements[0]); }
+        last() { return new QueryWrapper(this.elements[this.elements.length - 1]); }
+        is(selector) { return this.elements.some(el => el.matches(selector)); }
 
-    // A wrapper for a single DOM element
-    function Element(el) {
-      this.el = el;
+        addClass(className) { this.elements.forEach(el => el.classList.add(className)); return this; }
+        removeClass(className) { this.elements.forEach(el => el.classList.remove(className)); return this; }
+        toggleClass(className) { this.elements.forEach(el => el.classList.toggle(className)); return this; }
+
+        html(content) {
+            if (content === undefined) return this.elements[0]?.innerHTML ?? '';
+            this.elements.forEach(el => el.innerHTML = content);
+            return this;
+        }
+        text(content) {
+            if (content === undefined) return this.elements[0]?.textContent ?? '';
+            this.elements.forEach(el => el.textContent = content);
+            return this;
+        }
+        css(styles) {
+            if (typeof styles === 'string') return this.elements[0]?.style[styles] ?? '';
+            this.elements.forEach(el => Object.assign(el.style, styles));
+            return this;
+        }
+        attr(name, value) {
+            if (value === undefined) return this.elements[0]?.getAttribute(name);
+            this.elements.forEach(el => el.setAttribute(name, value));
+            return this;
+        }
+        val(value) {
+            if (value === undefined) return this.elements[0]?.value;
+            this.elements.forEach(el => el.value = value);
+            return this;
+        }
+
+        append(content) {
+            this.elements.forEach(el => {
+                if (typeof content === 'string') { el.insertAdjacentHTML('beforeend', content); }
+                else if (content instanceof QueryWrapper) { content.elements.forEach(child => el.appendChild(child.cloneNode(true))); }
+                else { el.appendChild(content); }
+            });
+            return this;
+        }
+        remove() { this.elements.forEach(el => el.parentNode?.removeChild(el)); return this; }
+        empty() { this.elements.forEach(el => el.innerHTML = ''); return this; }
+        toggle() { this.elements.forEach(el => el.style.display = el.style.display === 'none' ? '' : 'none'); return this; }
+
+        on(eventName, selector, handler) {
+            const events = eventName.split(' ');
+            if (typeof selector === 'function') {
+                handler = selector;
+                events.forEach(eName => this.elements.forEach(el => el.addEventListener(eName, handler)));
+            } else {
+                events.forEach(eName => {
+                    this.elements.forEach(el => {
+                        el.addEventListener(eName, e => {
+                            const delegateTarget = e.target.closest(selector);
+                            if (delegateTarget) { handler.call(delegateTarget, e); }
+                        });
+                    });
+                });
+            }
+            return this;
+        }
+        off(eventName, handler) {
+            const events = eventName.split(' ');
+            events.forEach(eName => this.elements.forEach(el => el.removeEventListener(eName, handler)));
+            return this;
+        }
+
+        find(selector) {
+            const newElements = this.elements.flatMap(el => Array.from(el.querySelectorAll(selector)));
+            return new QueryWrapper(newElements);
+        }
+        parent() {
+            const parents = this.elements.map(el => el.parentElement).filter(el => el);
+            return new QueryWrapper([...new Set(parents)]);
+        }
+        children(selector = null) {
+            const children = this.elements.flatMap(el => Array.from(el.children));
+            const filtered = selector ? children.filter(el => el.matches(selector)) : children;
+            return new QueryWrapper([...new Set(filtered)]);
+        }
+        closest(selector) {
+            const closest = this.elements.map(el => el.closest(selector)).filter(el => el);
+            return new QueryWrapper([...new Set(closest)]);
+        }
     }
 
-    Element.prototype.addClass = function(className) {
-      this.el.classList.add(className);
-      return this;
-    };
-
-    Element.prototype.removeClass = function(className) {
-      this.el.classList.remove(className);
-      return this;
-    };
-
-    Element.prototype.on = function(eventName, handler) {
-        this.el.addEventListener(eventName, handler);
-        return this;
-    };
-
-    Element.prototype.html = function(htmlString) {
-        if (htmlString === undefined) {
-            return this.el.innerHTML;
-        }
-        this.el.innerHTML = htmlString;
-        return this;
-    };
-
-    Element.prototype.text = function(textString) {
-        if (textString === undefined) {
-            return this.el.textContent;
-        }
-        this.el.textContent = textString;
-        return this;
-    };
-
-    Element.prototype.css = function(prop, value) {
-        if (value === undefined && typeof prop === 'string') {
-            return window.getComputedStyle(this.el).getPropertyValue(prop);
-        }
-        if (typeof prop === 'object') {
-            for (var key in prop) {
-                this.el.style[key] = prop[key];
+    const JQCdN = function(selector) {
+        if (typeof selector === 'function') {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', selector);
+            } else {
+                selector();
             }
         } else {
-            this.el.style[prop] = value;
+            return new QueryWrapper(selector);
         }
-        return this;
     };
 
-    Element.prototype.append = function(htmlString) {
-        this.el.insertAdjacentHTML('beforeend', htmlString);
-        return this;
-    };
-
-    Element.prototype.find = function(selector) {
-        var elements = this.el.querySelectorAll(selector);
-        return new ElementCollection(Array.from(elements));
-    };
-
-    Element.prototype.parent = function() {
-        var parent = this.el.parentElement;
-        return new ElementCollection(parent ? [parent] : []);
-    };
-
-    Element.prototype.children = function() {
-        return new ElementCollection(Array.from(this.el.children));
-    };
-
-    Element.prototype.siblings = function() {
-        if (!this.el.parentElement) {
-            return new ElementCollection([]);
-        }
-        var siblings = Array.from(this.el.parentElement.children).filter(function(child) {
-            return child !== this.el;
-        }.bind(this));
-        return new ElementCollection(siblings);
-    };
-
-    Element.prototype.closest = function(selector) {
-        var closestEl = this.el.closest(selector);
-        return new ElementCollection(closestEl ? [closestEl] : []);
-    };
-
-    // A wrapper for a collection of DOM elements
-    function ElementCollection(nodes) {
-        this.nodes = [];
-        for (var i = 0; i < nodes.length; i++) {
-            this.nodes.push(new Element(nodes[i]));
-        }
-    }
-
-    ElementCollection.prototype.addClass = function(className) {
-        this.nodes.forEach(function(node) {
-            node.addClass(className);
-        });
-        return this;
-    };
-
-    ElementCollection.prototype.append = function(htmlString) {
-        this.nodes.forEach(function(node) {
-            node.append(htmlString);
-        });
-        return this;
-    };
-
-    ElementCollection.prototype.find = function(selector) {
-        var allFound = [];
-        this.nodes.forEach(function(node) {
-            var foundNodes = node.el.querySelectorAll(selector);
-            allFound.push.apply(allFound, Array.from(foundNodes));
-        });
-        var uniqueFound = Array.from(new Set(allFound));
-        return new ElementCollection(uniqueFound);
-    };
-
-    ElementCollection.prototype.parent = function() {
-        var allParents = [];
-        this.nodes.forEach(function(node) {
-            if (node.el.parentElement) {
-                allParents.push(node.el.parentElement);
-            }
-        });
-        var uniqueParents = Array.from(new Set(allParents));
-        return new ElementCollection(uniqueParents);
-    };
-
-    ElementCollection.prototype.children = function() {
-        var allChildren = [];
-        this.nodes.forEach(function(node) {
-            allChildren.push.apply(allChildren, Array.from(node.el.children));
-        });
-        return new ElementCollection(allChildren);
-    };
-
-    ElementCollection.prototype.siblings = function() {
-        var allSiblings = [];
-        this.nodes.forEach(function(node) {
-            if (node.el.parentElement) {
-                var siblings = Array.from(node.el.parentElement.children).filter(function(child) {
-                    return child !== node.el;
-                });
-                allSiblings.push.apply(allSiblings, siblings);
-            }
-        });
-        var uniqueSiblings = Array.from(new Set(allSiblings));
-        return new ElementCollection(uniqueSiblings);
-    };
-
-    ElementCollection.prototype.closest = function(selector) {
-        var allClosest = [];
-        this.nodes.forEach(function(node) {
-            var closestEl = node.el.closest(selector);
-            if (closestEl) {
-                allClosest.push(closestEl);
-            }
-        });
-        var uniqueClosest = Array.from(new Set(allClosest));
-        return new ElementCollection(uniqueClosest);
-    };
-
-    ElementCollection.prototype.html = function(htmlString) {
-        if (htmlString === undefined) {
-            return this.nodes.length > 0 ? this.nodes[0].html() : undefined;
-        }
-        this.nodes.forEach(function(node) {
-            node.html(htmlString);
-        });
-        return this;
-    };
-
-    ElementCollection.prototype.text = function(textString) {
-        if (textString === undefined) {
-            return this.nodes.length > 0 ? this.nodes[0].text() : undefined;
-        }
-        this.nodes.forEach(function(node) {
-            node.text(textString);
-        });
-        return this;
-    };
-
-    ElementCollection.prototype.css = function(prop, value) {
-        if (value === undefined && typeof prop === 'string') {
-            return this.nodes.length > 0 ? this.nodes[0].css(prop) : undefined;
-        }
-        this.nodes.forEach(function(node) {
-            node.css(prop, value);
-        });
-        return this;
-    };
-
-    ElementCollection.prototype.removeClass = function(className) {
-        this.nodes.forEach(function(node) {
-            node.removeClass(className);
-        });
-        return this;
-    };
-
-    ElementCollection.prototype.on = function(eventName, handler) {
-        this.nodes.forEach(function(node) {
-            node.on(eventName, handler);
-        });
-        return this;
-    };
-
-
-    JQCdN.get = function(selector) {
-      var elements;
-      if (typeof selector === 'string') {
-        elements = document.querySelectorAll(selector);
-      } else if (selector instanceof HTMLElement || selector instanceof Node) {
-        elements = [selector];
-      } else {
-        elements = [];
-      }
-      return new ElementCollection(Array.from(elements));
-    };
-
-    JQCdN.template = function(templateString) {
-      return function(data) {
-        return templateString.replace(/\{\{([^}]+)\}\}/g, function(match, key) {
-          var keys = key.trim().split('.');
-          var value = data;
-          for (var i = 0; i < keys.length; i++) {
-            if (value === undefined) break;
-            value = value[keys[i]];
-          }
-          return value || '';
-        });
-      };
-    };
-
-    JQCdN.ajax = function(options) {
-        var url = options.url;
-        var method = options.method || 'GET';
-        var success = options.success || function() {};
-        var error = options.error || function() {};
-        var data = options.data || null;
-
-        var fetchOptions = {
-            method: method,
-            headers: {}
+    JQCdN.ajax = async function({ url, method = 'GET', data = null, headers = {}, success = () => {}, error = () => {} }) {
+        const options = {
+            method,
+            headers: { 'Content-Type': 'application/json', ...headers },
         };
-
-        if (data) {
-            if (typeof data === 'object') {
-                fetchOptions.body = JSON.stringify(data);
-                fetchOptions.headers['Content-Type'] = 'application/json';
-            } else {
-                fetchOptions.body = data;
-            }
+        if (data && (method === 'POST' || method === 'PUT')) {
+            options.body = JSON.stringify(data);
         }
-
-        fetch(url, fetchOptions)
-            .then(function(response) {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok: ' + response.statusText);
-                }
-                var contentType = response.headers.get('content-type');
-                if (contentType && contentType.indexOf('application/json') !== -1) {
-                    return response.json();
-                }
-                return response.text();
-            })
-            .then(function(data) {
-                success(data);
-            })
-            .catch(function(err) {
-                error(err);
-            });
+        try {
+            const response = await fetch(url, options);
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+            const responseData = await response.json();
+            success(responseData);
+            return responseData;
+        } catch (err) {
+            error(err);
+            throw err;
+        }
     };
 
-    JQCdN.hello = function() {
-      console.log('Hello from JQCdN!');
-    };
-
-    return JQCdN;
-  }
-
-  if (typeof(JQCdN) === 'undefined') {
-    window.JQCdN = define_jqcdn();
-  }
+    window.JQCdN = JQCdN;
+    window.$ = JQCdN; // Provide $ as an alias for convenience
 })(window);
