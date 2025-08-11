@@ -1,3 +1,8 @@
+[![](https://data.jsdelivr.com/v1/package/gh/gtref/JQCdNv10.1.0/badge)](https://www.jsdelivr.com/package/gh/gtref/JQCdNv10.1.0)
+
+
+
+
 # JQCdN v10.1.0
 
 JQCdN is a simple JavaScript library and CSS stylesheet that demonstrates how to create a CDN-like project. It provides a small set of jQuery-like functions for DOM manipulation and a few basic CSS styles.
