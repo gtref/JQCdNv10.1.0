@@ -1,3 +1,14 @@
+
+JQCdN v10.2.0
+=======
+[![](https://data.jsdelivr.com/v1/package/gh/gtref/JQCdNv10.1.0/badge)](https://www.jsdelivr.com/package/gh/gtref/JQCdNv10.1.0)  [![GitHub forks](https://img.shields.io/github/forks/gtref/JQCdNv10.1.0?style=social)](https://github.com/gtref/JQCdNv10.1.0/network)
+
+
+
+
+
+
+
 # JQCdN v10.2.0
 
 JQCdN is a modern, lightweight, zero-dependency alternative to jQuery for DOM manipulation, traversal, and asynchronous requests. It is available via the `JQCdN()` or `$` function.
