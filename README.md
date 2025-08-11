@@ -158,3 +158,12 @@ JQCdN.ajax({
 - `.children()`: Gets the children of each element in the current set of matched elements.
 - `.siblings()`: Gets the siblings of each element in the current set of matched elements.
 - `.closest(selector)`: For each element in the set, gets the first element that matches the selector by testing the element itself and traversing up through its ancestors in the DOM tree.
+
+
+
+
+#contribution
+--
+Below is a list of this repos contributers. Thanks to them for helping me.
+--
+[![contributors](https://contrib.rocks/image?repo=gtref/JQCdNv10.1.0)](https://github.com/gtref/JQCdNv10.1.0/graphs/contributors)
