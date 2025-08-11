@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JQCdN Test Suite</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@e5e75144eb74d4746fbc41f5f3a95fa669aed866/jqcdn.css">
+    <script src="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@e5e75144eb74d4746fbc41f5f3a95fa669aed866/jqcdn.js"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"; line-height: 1.6; padding: 20px; }
+        #results { border: 1px solid #ccc; padding: 10px; margin-top: 20px; }
+        .test-result { margin: 5px; padding: 10px; border-radius: 5px; border: 1px solid; }
+        .pass { background-color: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .fail { background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; }
+        h1, h2 { border-bottom: 1px solid #eee; padding-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>JQCdN Test Suite</h1>
+    <div id="test-fixture" style="display:none;">
+        <div id="el1" class="foo bar">
+            <p class="child">Child 1</p>
+            <span class="child">Child 2</span>
+            <div class="foo-nested">
+                <p id="nested-p">Nested</p>
+            </div>
+        </div>
+        <div id="el2" class="foo">Sibling</div>
+        <button id="test-btn">Click Me</button>
+        <div id="template-target"></div>
+        <div id="ajax-target"></div>
+    </div>
+    <h2>Results:</h2>
+    <div id="results"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const resultsContainer = document.getElementById('results');
+            let testsPassed = 0;
+            let testsFailed = 0;
+
+            async function runTest(description, testFn) {
+                const resultDiv = document.createElement('div');
+                resultDiv.classList.add('test-result');
+                try {
+                    const passed = await Promise.resolve(testFn());
+                    if (passed) {
+                        resultDiv.classList.add('pass');
+                        resultDiv.textContent = `PASS: ${description}`;
+                        testsPassed++;
+                    } else {
+                        throw new Error('Assertion failed');
+                    }
+                } catch (e) {
+                    resultDiv.classList.add('fail');
+                    resultDiv.textContent = `FAIL: ${description} | Error: ${e.message}`;
+                    testsFailed++;
+                }
+                resultsContainer.appendChild(resultDiv);
+            }
+
+            // --- Test Cases ---
+
+            await runTest('JQCdN.get() selects an element by ID', () => {
+                return JQCdN.get('#el1').nodes.length === 1;
+            });
+
+            await runTest('JQCdN.get() selects elements by class', () => {
+                return JQCdN.get('.foo').nodes.length === 2;
+            });
+
+            await runTest('.addClass() adds a class', () => {
+                const el = JQCdN.get('#el1');
+                el.addClass('new-class');
+                return el.nodes[0].el.classList.contains('new-class');
+            });
+
+            await runTest('.removeClass() removes a class', () => {
+                const el = JQCdN.get('#el1');
+                el.removeClass('bar');
+                return !el.nodes[0].el.classList.contains('bar');
+            });
+
+            await runTest('.html() sets and gets HTML content', () => {
+                const el = JQCdN.get('#el2');
+                el.html('<span>New HTML</span>');
+                return el.html() === '<span>New HTML</span>';
+            });
+
+            await runTest('.text() sets and gets text content', () => {
+                const el = JQCdN.get('#el2');
+                el.text('New Text');
+                return el.text() === 'New Text';
+            });
+
+            await runTest('.css() sets and gets a CSS property', () => {
+                const el = JQCdN.get('#el2');
+                el.css('color', 'rgb(255, 0, 0)');
+                return el.css('color') === 'rgb(255, 0, 0)';
+            });
+
+            await runTest('.parent() finds the correct parent', () => {
+                const child = JQCdN.get('#nested-p');
+                return child.parent().nodes[0].el.className === 'foo-nested';
+            });
+
+            await runTest('.children() finds the correct number of children', () => {
+                return JQCdN.get('#el1').children().nodes.length === 3;
+            });
+
+            await runTest('.siblings() finds the correct sibling', () => {
+                return JQCdN.get('#el1').siblings().nodes[0].el.id === 'el2';
+            });
+
+            await runTest('.find() finds nested elements', () => {
+                const found = JQCdN.get('#el1').find('#nested-p');
+                return found.nodes.length === 1 && found.nodes[0].el.id === 'nested-p';
+            });
+
+            await runTest('.closest() finds the correct ancestor', () => {
+                return JQCdN.get('#nested-p').closest('.foo').nodes[0].el.id === 'el1';
+            });
+
+            await runTest('.on() attaches a click event listener', () => {
+                let clicked = false;
+                const btn = JQCdN.get('#test-btn');
+                btn.on('click', () => { clicked = true; });
+                btn.nodes[0].el.click();
+                return clicked;
+            });
+
+            await runTest('JQCdN.template() renders a template', () => {
+                const template = JQCdN.template('<h1>Hello, {{name}}!</h1>');
+                const result = template({ name: 'World' });
+                JQCdN.get('#template-target').html(result);
+                return JQCdN.get('#template-target').text().trim() === 'Hello, World!';
+            });
+
+            await runTest('JQCdN.ajax() fetches data successfully', () => {
+                return new Promise((resolve) => {
+                    JQCdN.ajax({
+                        url: 'https://jsonplaceholder.typicode.com/posts/1',
+                        success: (data) => {
+                            JQCdN.get('#ajax-target').text(data.title);
+                            resolve(JQCdN.get('#ajax-target').text() === data.title);
+                        },
+                        error: (err) => resolve(false)
+                    });
+                });
+            });
+
+            // Summary
+            const summary = document.createElement('h2');
+            summary.textContent = `Tests Complete: ${testsPassed} passed, ${testsFailed} failed.`;
+            resultsContainer.prepend(summary);
+        });
+    </script>
+</body>
+</html>
