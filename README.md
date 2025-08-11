@@ -1,13 +1,4 @@
-
-JQCdN v10.2.0
-=======
 [![](https://data.jsdelivr.com/v1/package/gh/gtref/JQCdNv10.1.0/badge)](https://www.jsdelivr.com/package/gh/gtref/JQCdNv10.1.0)  [![GitHub forks](https://img.shields.io/github/forks/gtref/JQCdNv10.1.0?style=social)](https://github.com/gtref/JQCdNv10.1.0/network)
-
-
-
-
-
-
 
 # JQCdN v10.2.0
 
@@ -108,7 +99,6 @@ The core function is the entry point to the library.
 -   `.on(eventName, selector, handler)`: Attaches an event listener. Supports event delegation by providing a `selector`.
 -   `.off(eventName, handler)`: Removes an event listener.
 
-
 #contribution
 --
 Below is a list of this repos contributers. Thanks to them for helping me.
@@ -116,5 +106,3 @@ Below is a list of this repos contributers. Thanks to them for helping me.
 [![contributors](https://contrib.rocks/image?repo=gtref/JQCdNv10.1.0)](https://github.com/gtref/JQCdNv10.1.0/graphs/contributors)
 
 --
-
-
