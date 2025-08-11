@@ -61,6 +61,11 @@
         return this;
     };
 
+    Element.prototype.append = function(htmlString) {
+        this.el.insertAdjacentHTML('beforeend', htmlString);
+        return this;
+    };
+
     Element.prototype.find = function(selector) {
         var elements = this.el.querySelectorAll(selector);
         return new ElementCollection(Array.from(elements));
@@ -101,6 +106,13 @@
     ElementCollection.prototype.addClass = function(className) {
         this.nodes.forEach(function(node) {
             node.addClass(className);
+        });
+        return this;
+    };
+
+    ElementCollection.prototype.append = function(htmlString) {
+        this.nodes.forEach(function(node) {
+            node.append(htmlString);
         });
         return this;
     };
@@ -206,7 +218,14 @@
 
 
     JQCdN.get = function(selector) {
-      var elements = document.querySelectorAll(selector);
+      var elements;
+      if (typeof selector === 'string') {
+        elements = document.querySelectorAll(selector);
+      } else if (selector instanceof HTMLElement || selector instanceof Node) {
+        elements = [selector];
+      } else {
+        elements = [];
+      }
       return new ElementCollection(Array.from(elements));
     };
 
