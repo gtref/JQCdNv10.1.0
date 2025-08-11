@@ -135,6 +135,14 @@
                 return JQCdN.get('#template-target').text().trim() === 'Hello, World!';
             });
 
+            await runTest('.append() adds HTML content to an element', () => {
+                const el = JQCdN.get('#template-target');
+                el.html(''); // Clear it first
+                el.append('<span>Appended</span>');
+                el.append('<span>More</span>');
+                return el.nodes[0].el.children.length === 2 && el.nodes[0].el.lastChild.textContent === 'More';
+            });
+
             await runTest('JQCdN.ajax() fetches data successfully', () => {
                 return new Promise((resolve) => {
                     JQCdN.ajax({
