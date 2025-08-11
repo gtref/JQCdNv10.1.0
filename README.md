@@ -11,14 +11,14 @@ To use JQCdN in your project, you can include the `jqcdn.js` and `jqcdn.css` fil
 <html>
 <head>
   <title>JQCdN Example</title>
-  <link rel="stylesheet" href="jqcdn.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@e5e75144eb74d4746fbc41f5f3a95fa669aed866/jqcdn.css">
 </head>
 <body>
 
   <h1 id="my-heading">Hello, World!</h1>
   <button id="my-button">Click Me</button>
 
-  <script src="jqcdn.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@e5e75144eb74d4746fbc41f5f3a95fa669aed866/jqcdn.js"></script>
   <script>
     // Example usage:
     var heading = JQCdN.get('#my-heading');
@@ -86,7 +86,7 @@ You can use JQCdN as a CDN by serving the files directly from this GitHub reposi
 To get the CDN links, use the following format:
 
 ```
-https://cdn.jsdelivr.net/gh/{user}/{repo}@{version}/{file}
+https://www.jsdelivr.com/package/gh/gtref/JQCdNv10.1.0?tab=files
 ```
 
 Replace `{user}`, `{repo}`, and `{version}` with your GitHub username, repository name, and the desired version (e.g., a git tag or commit hash).
@@ -95,12 +95,12 @@ For example, to use version 10.1.0 of the files from this repository, you would 
 
 **CSS:**
 ```
-https://cdn.jsdelivr.net/gh/your-username/your-repo-name@v10.1.0/jqcdn.css
+https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@e5e75144eb74d4746fbc41f5f3a95fa669aed866/jqcdn.css
 ```
 
 **JavaScript:**
 ```
-https://cdn.jsdelivr.net/gh/your-username/your-repo-name@v10.1.0/jqcdn.js
+https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@e5e75144eb74d4746fbc41f5f3a95fa669aed866/jqcdn.js
 ```
 
 **Note:** You will need to replace `your-username` and `your-repo-name` with the actual username and repository name. You will also need to create a git tag for the version you want to use (e.g., `v10.1.0`).
