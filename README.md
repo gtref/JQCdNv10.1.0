@@ -165,5 +165,8 @@ JQCdN.ajax({
 #contribution
 --
 Below is a list of this repos contributers. Thanks to them for helping me.
---
+
 [![contributors](https://contrib.rocks/image?repo=gtref/JQCdNv10.1.0)](https://github.com/gtref/JQCdNv10.1.0/graphs/contributors)
+
+--
+
