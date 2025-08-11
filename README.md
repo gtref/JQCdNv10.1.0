@@ -1,5 +1,12 @@
 [![](https://data.jsdelivr.com/v1/package/gh/gtref/JQCdNv10.1.0/badge)](https://www.jsdelivr.com/package/gh/gtref/JQCdNv10.1.0)  [![GitHub forks](https://img.shields.io/github/forks/gtref/JQCdNv10.1.0?style=social)](https://github.com/gtref/JQCdNv10.1.0/network)
 
+
+
+
+
+# JQCdN v10.1.0
+ main
+
 # JQCdN v10.2.0
 
 JQCdN is a modern, lightweight, zero-dependency alternative to jQuery for DOM manipulation, traversal, and asynchronous requests. It is available via the `JQCdN()` or `$` function.
@@ -13,8 +20,12 @@ To use JQCdN in your project, include the `jqcdn.js` and `jqcdn.css` files in yo
 <html>
 <head>
   <title>JQCdN Example</title>
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.2.0/jqcdn.css">
   <script src="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.2.0/jqcdn.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@e5e75144eb74d4746fbc41f5f3a95fa669aed866/jqcdn.css">
+
 </head>
 <body>
 
@@ -25,6 +36,9 @@ To use JQCdN in your project, include the `jqcdn.js` and `jqcdn.css` files in yo
       <button id="my-button" class="btn btn-primary">Click Me</button>
     </div>
   </div>
+
+
+  <script src="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@e5e75144eb74d4746fbc41f5f3a95fa669aed866/jqcdn.js"></script>
 
   <script>
     // You can use either $ or JQCdN
@@ -55,14 +69,32 @@ You can use JQCdN as a CDN by serving the files directly from this GitHub reposi
 
 **CSS:** `https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.2.0/jqcdn.css`
 
+
 **JavaScript:** `https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.2.0/jqcdn.js`
+
+```
+https://www.jsdelivr.com/package/gh/gtref/JQCdNv10.1.0?tab=files
+```
+
 
 
 ## API Reference
 
+
 ### Core Function: `$(selector)` or `JQCdN(selector)`
 
 The core function is the entry point to the library.
+
+**CSS:**
+```
+https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@e5e75144eb74d4746fbc41f5f3a95fa669aed866/jqcdn.css
+```
+
+**JavaScript:**
+```
+https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@e5e75144eb74d4746fbc41f5f3a95fa669aed866/jqcdn.js
+```
+
 
 -   **`$(selector)`**: If the selector is a string, it returns a new `QueryWrapper` instance containing all matching elements. If the selector is a DOM node or an existing `QueryWrapper`, it wraps it.
 -   **`$(function() { ... })`**: If a function is passed, it executes when the DOM is fully loaded (equivalent to `DOMContentLoaded`).
@@ -105,4 +137,28 @@ Below is a list of this repos contributers. Thanks to them for helping me.
 
 [![contributors](https://contrib.rocks/image?repo=gtref/JQCdNv10.1.0)](https://github.com/gtref/JQCdNv10.1.0/graphs/contributors)
 
+
 --
+
+#### Events
+- `.on(eventName, handler)`: Attaches an event listener to the selected element(s).
+
+#### Traversal
+- `.find(selector)`: Gets the descendants of each element in the current set of matched elements, filtered by a selector.
+- `.parent()`: Gets the parent of each element in the current set of matched elements.
+- `.children()`: Gets the children of each element in the current set of matched elements.
+- `.siblings()`: Gets the siblings of each element in the current set of matched elements.
+- `.closest(selector)`: For each element in the set, gets the first element that matches the selector by testing the element itself and traversing up through its ancestors in the DOM tree.
+
+
+
+
+#contribution
+--
+Below is a list of this repos contributers. Thanks to them for helping me.
+
+[![contributors](https://contrib.rocks/image?repo=gtref/JQCdNv10.1.0)](https://github.com/gtref/JQCdNv10.1.0/graphs/contributors)
+
+--
+
+
