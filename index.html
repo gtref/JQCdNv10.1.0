@@ -3,82 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JQCdN To-Do App</title>
+    <title>JQCdN To-Do App v10.2.0</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.2.0/jqcdn.css">
     <script src="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.2.0/jqcdn.js"></script>
     <style>
         body { background-color: #f3f4f6; }
-        .todo-item.completed span { text-decoration: line-through; color: #6b7280; }
-        .delete-btn {
-            background-color: #ef4444;
-            color: white;
-            border: none;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            cursor: pointer;
-            opacity: 0.5;
-            transition: opacity 0.2s ease-in-out;
-        }
-        .todo-item:hover .delete-btn {
-            opacity: 1;
-        }
+        .todo-item.completed .todo-text { text-decoration: line-through; color: #6c757d; }
     </style>
 </head>
 <body class="d-flex justify-center items-center h-screen">
 
-    <div class="bg-white p-4 rounded-lg border" style="width: 400px;">
-        <h1 class="text-xl font-bold text-center mb-4">My To-Do List</h1>
+    <div class="card" style="width: 450px;">
+        <div class="card-body">
+            <h1 class="card-title text-xl font-bold text-center">My To-Do List</h1>
 
-        <form id="todo-form" class="d-flex mb-4">
-            <input type="text" id="todo-input" class="p-2 border flex-grow" placeholder="Add a new task..." required>
-            <button type="submit" class="bg-black text-white p-2 rounded-md" style="background-color: #007bff;">Add</button>
-        </form>
+            <div id="error-alert" class="alert alert-danger d-none" role="alert">
+              Please enter a task.
+            </div>
 
-        <ul id="todo-list" class="text-gray-500">
-            <!-- To-do items will be inserted here -->
-        </ul>
+            <form id="todo-form" class="d-flex mb-4">
+                <input type="text" id="todo-input" class="form-control flex-grow" placeholder="Add a new task...">
+                <button type="submit" class="btn btn-primary" style="margin-left: 10px;">Add</button>
+            </form>
+
+            <ul id="todo-list" class="p-0">
+                <!-- To-do items will be inserted here -->
+            </ul>
+        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = JQCdN.get('#todo-form');
-            const input = JQCdN.get('#todo-input');
-            const list = JQCdN.get('#todo-list');
+        $(function() {
+            const form = $('#todo-form');
+            const input = $('#todo-input');
+            const list = $('#todo-list');
+            const errorAlert = $('#error-alert');
 
-            // Template for a new to-do item
-            const todoTemplate = JQCdN.template(`
-                <li class="todo-item d-flex justify-between items-center p-2 border">
-                    <span class="flex-grow" style="cursor: pointer;">{{ text }}</span>
-                    <button class="delete-btn">Delete</button>
+            const todoTemplate = (text) => `
+                <li class="todo-item d-flex justify-between items-center p-2 border-bottom">
+                    <span class="todo-text flex-grow" style="cursor: pointer;">${text}</span>
+                    <button class="delete-btn btn btn-danger">X</button>
                 </li>
-            `);
+            `;
 
             // Add a new to-do item
-            form.on('submit', function (e) {
+            form.on('submit', function(e) {
                 e.preventDefault();
-                const todoText = input.nodes[0].el.value.trim();
+                const todoText = input.val().trim();
+
                 if (todoText) {
-                    const newTodoHtml = todoTemplate({ text: todoText });
-                    // Use the new .append() method
-                    list.append(newTodoHtml);
-                    input.nodes[0].el.value = '';
+                    errorAlert.addClass('d-none');
+                    list.append(todoTemplate(todoText));
+                    input.val(''); // Clear input field
+                } else {
+                    errorAlert.removeClass('d-none');
                 }
             });
 
-            // Handle complete and delete actions using event delegation
-            list.on('click', function (e) {
-                const target = JQCdN.get(e.target);
+            // Use event delegation for complete and delete actions
+            list.on('click', '.todo-text', function(e) {
+                $(this).parent().toggleClass('completed');
+            });
 
-                // Mark as completed
-                if (e.target.tagName === 'SPAN') {
-                    target.closest('li').nodes[0].el.classList.toggle('completed');
-                }
-
-                // Delete item
-                if (e.target.classList.contains('delete-btn')) {
-                    const todoItem = target.closest('li');
-                    todoItem.nodes[0].el.remove();
-                }
+            list.on('click', '.delete-btn', function(e) {
+                $(this).closest('li').remove();
             });
         });
     </script>

@@ -1,32 +1,39 @@
-# JQCdN v10.1.0
+# JQCdN v10.2.0
 
-JQCdN is a simple JavaScript library and CSS stylesheet that demonstrates how to create a CDN-like project. It provides a small set of jQuery-like functions for DOM manipulation and a few basic CSS styles.
+JQCdN is a modern, lightweight, zero-dependency alternative to jQuery for DOM manipulation, traversal, and asynchronous requests. It is available via the `JQCdN()` or `$` function.
 
 ## Usage
 
-To use JQCdN in your project, you can include the `jqcdn.js` and `jqcdn.css` files in your HTML file.
+To use JQCdN in your project, include the `jqcdn.js` and `jqcdn.css` files in your HTML file. The recommended way is to use the versioned jsDelivr CDN link.
 
 ```html
 <!DOCTYPE html>
 <html>
 <head>
   <title>JQCdN Example</title>
-  <link rel="stylesheet" href="jqcdn.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.2.0/jqcdn.css">
+  <script src="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.2.0/jqcdn.js"></script>
 </head>
 <body>
 
-  <h1 id="my-heading">Hello, World!</h1>
-  <button id="my-button">Click Me</button>
+  <div id="main" class="card">
+    <div class="card-body">
+      <h1 id="my-heading" class="card-title">Hello, World!</h1>
+      <p>This is a sample website using JQCdN.</p>
+      <button id="my-button" class="btn btn-primary">Click Me</button>
+    </div>
+  </div>
 
-  <script src="jqcdn.js"></script>
   <script>
-    // Example usage:
-    var heading = JQCdN.get('#my-heading');
-    heading.addClass('jqcdn-hello');
+    // You can use either $ or JQCdN
+    $(function() {
+      // This function runs when the DOM is ready
+      const heading = $('#my-heading');
+      heading.css({ color: '#007bff' });
 
-    var button = JQCdN.get('#my-button');
-    button.on('click', function() {
-      alert('Button clicked!');
+      $('#my-button').on('click', function() {
+        $(this).text('Clicked!');
+      });
     });
   </script>
 
@@ -34,122 +41,58 @@ To use JQCdN in your project, you can include the `jqcdn.js` and `jqcdn.css` fil
 </html>
 ```
 
-## CSS Utility Library
+## CSS Utility & Component Library
 
-`jqcdn.css` is a minimal, utility-first CSS library to help you style your projects without writing custom CSS. It includes helpers for:
-
-- **Display:** `d-flex`, `d-grid`, `d-none`, etc.
-- **Flexbox:** `flex-col`, `items-center`, `justify-between`, etc.
-- **Spacing:** Margin and padding utilities like `m-4` (1rem) and `p-2` (0.5rem).
-- **Sizing:** `w-full`, `h-screen`, etc.
-- **Typography:** `text-lg`, `font-bold`, `text-center`, etc.
-- **Colors:** A simple palette for text and background colors.
-- **Borders:** `border`, `rounded-lg`, etc.
-
-You can inspect the `jqcdn.css` file to see all available classes.
-
-## Templating
-
-JQCdN includes a simple templating engine to help you create dynamic content.
-
-### `JQCdN.template(templateString)`
-
-This function takes a template string with `{{placeholders}}` and returns a template function. The template function can then be called with a data object to generate the final HTML.
-
-### `.html(htmlString)`
-
-This method, available on `Element` and `ElementCollection` objects, sets the `innerHTML` of the selected element(s).
-
-### Example
-
-```html
-<div id="user-profile"></div>
-
-<script>
-  var user = {
-    name: 'John Doe',
-    email: 'john.doe@example.com'
-  };
-
-  var templateString = '<h2>{{ name }}</h2><p>{{ email }}</p>';
-  var template = JQCdN.template(templateString);
-  var html = template(user);
-
-  JQCdN.get('#user-profile').html(html);
-</script>
-```
+`jqcdn.css` is a minimal CSS library to help you style your projects quickly. It includes:
+- **Utility Classes:** Helpers for display, flexbox, spacing, sizing, and typography (e.g., `.d-flex`, `.p-4`, `.text-center`).
+- **Components:** Pre-styled components like `.card`, `.btn`, `.alert`, and `.form-control`.
 
 ## CDN
 
-You can use JQCdN as a CDN by serving the files directly from this GitHub repository using a service like [jsDelivr](https://www.jsdelivr.com/).
+You can use JQCdN as a CDN by serving the files directly from this GitHub repository using jsDelivr. Use the following versioned link for stability:
 
-To get the CDN links, use the following format:
+**CSS:** `https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.2.0/jqcdn.css`
 
-```
-https://cdn.jsdelivr.net/gh/{user}/{repo}@{version}/{file}
-```
+**JavaScript:** `https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.2.0/jqcdn.js`
 
-Replace `{user}`, `{repo}`, and `{version}` with your GitHub username, repository name, and the desired version (e.g., a git tag or commit hash).
 
-For example, to use version 10.1.0 of the files from this repository, you would use the following links:
+## API Reference
 
-**CSS:**
-```
-https://cdn.jsdelivr.net/gh/your-username/your-repo-name@v10.1.0/jqcdn.css
-```
+### Core Function: `$(selector)` or `JQCdN(selector)`
 
-**JavaScript:**
-```
-https://cdn.jsdelivr.net/gh/your-username/your-repo-name@v10.1.0/jqcdn.js
-```
+The core function is the entry point to the library.
 
-**Note:** You will need to replace `your-username` and `your-repo-name` with the actual username and repository name. You will also need to create a git tag for the version you want to use (e.g., `v10.1.0`).
+-   **`$(selector)`**: If the selector is a string, it returns a new `QueryWrapper` instance containing all matching elements. If the selector is a DOM node or an existing `QueryWrapper`, it wraps it.
+-   **`$(function() { ... })`**: If a function is passed, it executes when the DOM is fully loaded (equivalent to `DOMContentLoaded`).
 
-## API
+### Static Methods
 
-### `JQCdN.get(selector)`
+-   **`$.ajax({ options })`**: Performs an asynchronous HTTP request using `fetch`. Returns a promise and accepts `success` and `error` callbacks.
 
-Selects elements from the DOM using a CSS selector and returns an `ElementCollection` that can be chained with other methods. This collection is chainable even if no elements are found.
-
-### `JQCdN.ajax(options)`
-
-Performs an asynchronous HTTP (Ajax) request. It's a simple wrapper around the `fetch` API.
-
-**Options:**
-- `url`: The URL to request.
-- `method`: The HTTP method (e.g., 'GET', 'POST'). Defaults to 'GET'.
-- `data`: Data to be sent to the server. It is converted to a JSON string if it's an object.
-- `success`: A function to be called if the request succeeds. It receives the response data (parsed as JSON if possible).
-- `error`: A function to be called if the request fails.
-
-**Example:**
-```javascript
-JQCdN.ajax({
-  url: 'https://api.example.com/data',
-  success: function(data) {
-    console.log(data);
-  },
-  error: function(err) {
-    console.error('Request failed', err);
-  }
-});
-```
-
-### `Element` and `ElementCollection` Methods
+### Wrapper Methods (Chainable)
 
 #### Manipulation
-- `.html(htmlString)`: Gets the HTML contents of the first element or sets the HTML contents of all selected elements.
-- `.text(textString)`: Gets the text content of the first element or sets the text content of all selected elements.
-- `.css(prop, value)`: Gets the value of a style property for the first element, or sets one or more CSS properties for all selected elements.
-- `.addClass(className)`: Adds a class to the selected element(s).
-- `.removeClass(className)`: Removes a class from the selected element(s).
+-   `.html(content)`: Gets or sets the inner HTML.
+-   `.text(content)`: Gets or sets the text content.
+-   `.val(value)`: Gets or sets the value of form elements.
+-   `.append(content)`: Appends content to the end of each selected element.
+-   `.attr(name, value)`: Gets or sets an attribute.
+-   `.css(styles)`: Gets a style property or sets multiple styles from an object.
+-   `.addClass(name)`, `.removeClass(name)`, `.toggleClass(name)`: Manipulate CSS classes.
+-   `.remove()`: Removes the selected elements from the DOM.
+-   `.empty()`: Removes all child nodes from the selected elements.
+-   `.toggle()`: Toggles the display (visible/hidden) of elements.
+
+#### Traversal & Filtering
+-   `.find(selector)`: Finds descendant elements.
+-   `.parent()`: Gets the direct parent of each element.
+-   `.children(selector)`: Gets the children of each element, optionally filtered by a selector.
+-   `.closest(selector)`: Finds the first ancestor that matches the selector.
+-   `.first()`: Reduces the set of matched elements to the first one.
+-   `.last()`: Reduces the set of matched elements to the last one.
+-   `.is(selector)`: Checks if any of the matched elements match the given selector.
+-   `.each(callback)`: Iterates over the set of matched elements.
 
 #### Events
-- `.on(eventName, handler)`: Attaches an event listener to the selected element(s).
-
-#### Traversal
-- `.find(selector)`: Gets the descendants of each element in the current set of matched elements, filtered by a selector.
-- `.parent()`: Gets the parent of each element in the current set of matched elements.
-- `.children()`: Gets the children of each element in the current set of matched elements.
-- `.siblings()`: Gets the siblings of each element in the current set of matched elements.
-- `.closest(selector)`: For each element in the set, gets the first element that matches the selector by testing the element itself and traversing up through its ancestors in the DOM tree.
+-   `.on(eventName, selector, handler)`: Attaches an event listener. Supports event delegation by providing a `selector`.
+-   `.off(eventName, handler)`: Removes an event listener.
