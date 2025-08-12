@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JQCdN To-Do App v10.2.0</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.2.0/jqcdn.css">
-    <script src="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.2.0/jqcdn.js"></script>
+    <title>JQCdN To-Do App v10.6.0</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jqcdn@10.6.0/jqcdn.css">
+    <script src="https://cdn.jsdelivr.net/npm/jqcdn@10.6.0/jqcdn.js"></script>
     <style>
         body { background-color: #f3f4f6; }
         .todo-item.completed .todo-text { text-decoration: line-through; color: #6c757d; }
     </style>
 </head>
-<body class="d-flex justify-center items-center h-screen">
+<body>
 
-    <div class="card" style="width: 450px;">
+    <div class="card" style="width: 450px; margin: auto;">
         <div class="card-body">
             <h1 class="card-title text-xl font-bold text-center">My To-Do List</h1>
 
@@ -33,7 +33,13 @@
     </div>
 
     <script>
+        // Show splash screen immediately
+        $.splashScreen('show');
+
         $(function() {
+            // Hide splash screen once DOM is ready and app logic is about to run
+            $.splashScreen('hide');
+
             const form = $('#todo-form');
             const input = $('#todo-input');
             const list = $('#todo-list');
@@ -54,18 +60,18 @@
                 if (todoText) {
                     errorAlert.addClass('d-none');
                     list.append(todoTemplate(todoText));
-                    input.val(''); // Clear input field
+                    input.val('');
                 } else {
                     errorAlert.removeClass('d-none');
                 }
             });
 
-            // Use event delegation for complete and delete actions
-            list.on('click', '.todo-text', function(e) {
+            // Event delegation for complete and delete actions
+            list.on('click', '.todo-text', function() {
                 $(this).parent().toggleClass('completed');
             });
 
-            list.on('click', '.delete-btn', function(e) {
+            list.on('click', '.delete-btn', function() {
                 $(this).closest('li').remove();
             });
         });
