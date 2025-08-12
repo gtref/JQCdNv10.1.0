@@ -4,9 +4,6 @@
 
 
 
-# JQCdN v10.1.0
- main
-
 # JQCdN v10.2.0
 
 JQCdN is a modern, lightweight, zero-dependency alternative to jQuery for DOM manipulation, traversal, and asynchronous requests. It is available via the `JQCdN()` or `$` function.
@@ -21,10 +18,8 @@ To use JQCdN in your project, include the `jqcdn.js` and `jqcdn.css` files in yo
 <head>
   <title>JQCdN Example</title>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.2.0/jqcdn.css">
-  <script src="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.2.0/jqcdn.js"></script>
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@e5e75144eb74d4746fbc41f5f3a95fa669aed866/jqcdn.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.3.0/jqcdn.css">
+  <script src="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.3.0/jqcdn.js"></script>
 
 </head>
 <body>
@@ -37,8 +32,6 @@ To use JQCdN in your project, include the `jqcdn.js` and `jqcdn.css` files in yo
     </div>
   </div>
 
-
-  <script src="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@e5e75144eb74d4746fbc41f5f3a95fa669aed866/jqcdn.js"></script>
 
   <script>
     // You can use either $ or JQCdN
@@ -67,13 +60,13 @@ To use JQCdN in your project, include the `jqcdn.js` and `jqcdn.css` files in yo
 
 You can use JQCdN as a CDN by serving the files directly from this GitHub repository using jsDelivr. Use the following versioned link for stability:
 
-**CSS:** `https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.2.0/jqcdn.css`
+**CSS:** `https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.3.0/jqcdn.css`
 
 
-**JavaScript:** `https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.2.0/jqcdn.js`
+**JavaScript:** `https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.3.0/jqcdn.js`
 
 ```
-https://www.jsdelivr.com/package/gh/gtref/JQCdNv10.1.0?tab=files
+https://www.jsdelivr.com/package/gh/gtref/JQCdNv10.1.0
 ```
 
 
@@ -85,15 +78,6 @@ https://www.jsdelivr.com/package/gh/gtref/JQCdNv10.1.0?tab=files
 
 The core function is the entry point to the library.
 
-**CSS:**
-```
-https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@e5e75144eb74d4746fbc41f5f3a95fa669aed866/jqcdn.css
-```
-
-**JavaScript:**
-```
-https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@e5e75144eb74d4746fbc41f5f3a95fa669aed866/jqcdn.js
-```
 
 
 -   **`$(selector)`**: If the selector is a string, it returns a new `QueryWrapper` instance containing all matching elements. If the selector is a DOM node or an existing `QueryWrapper`, it wraps it.
@@ -131,14 +115,8 @@ https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@e5e75144eb74d4746fbc41f5f3a95fa66
 -   `.on(eventName, selector, handler)`: Attaches an event listener. Supports event delegation by providing a `selector`.
 -   `.off(eventName, handler)`: Removes an event listener.
 
-#contribution
---
-Below is a list of this repos contributers. Thanks to them for helping me.
-
-[![contributors](https://contrib.rocks/image?repo=gtref/JQCdNv10.1.0)](https://github.com/gtref/JQCdNv10.1.0/graphs/contributors)
 
 
---
 
 #### Events
 - `.on(eventName, handler)`: Attaches an event listener to the selected element(s).
