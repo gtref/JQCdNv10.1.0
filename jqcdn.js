@@ -136,6 +136,28 @@
         }
     };
 
+    JQCdN.splashScreen = function(action = 'show') {
+        let splash = document.getElementById('jqcdn-splash-screen');
+        if (action === 'show') {
+            if (!splash) {
+                splash = document.createElement('div');
+                splash.id = 'jqcdn-splash-screen';
+                splash.className = 'splash-screen';
+                splash.innerHTML = '<div class="spinner"></div>';
+                document.body.appendChild(splash);
+            }
+            splash.style.opacity = '1';
+            splash.style.display = 'flex';
+        } else if (action === 'hide') {
+            if (splash) {
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                }, 300); // Match CSS transition time
+            }
+        }
+    };
+
     window.JQCdN = JQCdN;
     window.$ = JQCdN; // Provide $ as an alias for convenience
 })(window);
