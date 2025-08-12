@@ -1,15 +1,9 @@
 
-[![](https://data.jsdelivr.com/v1/package/npm/jqcdn/badge)](https://www.jsdelivr.com/package/npm/jqcdn)  [![GitHub forks](https://img.shields.io/github/forks/gtref/JQCdNv10.1.0?style=social)](https://github.com/gtref/JQCdNv10.1.0/network)
+[![](https://data.jsdelivr.com/v1/package/npm/jqcdn/badge)](https://www.jsdelivr.com/package/npm/jqcdn)  [![GitHub forks](https://img.shields.io/github/forks/gtref/JQCdNv10.1.0?style=social)](https://github.com/gtref/JQCdNv10.1.0/network) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/gtref/JQCdNv10.1.0)
 
-# JQCdN v10.6.0
-
-[![](https://data.jsdelivr.com/v1/package/gh/gtref/JQCdNv10.1.0/badge)](https://www.jsdelivr.com/package/gh/gtref/JQCdNv10.1.0)  [![GitHub forks](https://img.shields.io/github/forks/gtref/JQCdNv10.1.0?style=social)](https://github.com/gtref/JQCdNv10.1.0/network) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/gtref/JQCdNv10.1.0)
+# JQCdN v10.6.0 and v10.4.0
 
 
-
-
-
-# JQCdN v10.2.0
 
 JQCdN is a modern, lightweight, zero-dependency alternative to jQuery for DOM manipulation, traversal, and asynchronous requests. It is available via the `JQCdN()` or `$` function.
 
@@ -23,9 +17,32 @@ To use JQCdN in your project, include the `jqcdn.js` and `jqcdn.css` files in yo
 <head>
   <title>JQCdN Example</title>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jqcdn@10.6.0/jqcdn.css">
-  <script src="https://cdn.jsdelivr.net/npm/jqcdn@10.6.0/jqcdn.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jqcdn@10.6.0/jqcdn.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jqcdn@10.6.0/jqcdn.min.js"></script>
 
+
+</head>
+<body>
+  <div id="main" class="card">
+    <div class="card-body">
+      <h1 id="my-heading" class="card-title">Hello, World!</h1>
+    </div>
+  </div>
+
+  <script>
+    // Show a splash screen on load, and hide it after 1.5 seconds
+    $.splashScreen('show');
+    setTimeout(() => $.splashScreen('hide'), 1500);
+  </script>
+</body>
+</html>
+```
+or 
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JQCdN Example</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.4.0/jqcdn.css">
   <script src="https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.4.0/jqcdn.js"></script>
@@ -60,15 +77,15 @@ You can use JQCdN as a CDN by serving the files directly from npm via jsDelivr. 
 
 You can use JQCdN as a CDN by serving the files directly from this GitHub repository using jsDelivr. Use the following versioned link for stability:
 
-**CSS:** `https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.3.0/jqcdn.css`
+**CSS:** `https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.4.0/jqcdn.css`
 
 
-**CSS:** `https://cdn.jsdelivr.net/npm/jqcdn@10.6.0/jqcdn.css`
+**CSS:** `https://cdn.jsdelivr.net/npm/jqcdn@10.6.0/jqcdn.min.css`
 
 
-**JavaScript:** `https://cdn.jsdelivr.net/npm/jqcdn@10.6.0/jqcdn.js`
+**JavaScript:** `https://cdn.jsdelivr.net/npm/jqcdn@10.6.0/jqcdn.min.js`
 
-**JavaScript:** `https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.3.0/jqcdn.js`
+**JavaScript:** `https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.4.0/jqcdn.js`
 
 ```
 https://www.jsdelivr.com/package/gh/gtref/JQCdNv10.1.0
