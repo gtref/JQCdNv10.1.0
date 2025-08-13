@@ -149,7 +149,8 @@ The core function is the entry point to the library.
 - `.closest(selector)`: For each element in the set, gets the first element that matches the selector by testing the element itself and traversing up through its ancestors in the DOM tree.
 
 
-
+####JQCdN [![](https://data.jsdelivr.com/v1/package/gh/gtref/JQCdNv10.1.0/badge)](https://www.jsdelivr.com/package/gh/gtref/JQCdNv10.1.0)
+The original JQCdNv10.1.0 CDN is still active and currently the newest version.
 
 #contribution
 --
