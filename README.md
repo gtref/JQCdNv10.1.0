@@ -1,7 +1,7 @@
 
 [![](https://data.jsdelivr.com/v1/package/npm/jqcdn/badge)](https://www.jsdelivr.com/package/npm/jqcdn)  [![GitHub forks](https://img.shields.io/github/forks/gtref/JQCdNv10.1.0?style=social)](https://github.com/gtref/JQCdNv10.1.0/network) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/gtref/JQCdNv10.1.0)
 
-# JQCdN v10.6.0 and v10.4.0
+# JQCdN v10.9.0 and v10.4.0
 
 
 
@@ -17,8 +17,8 @@ To use JQCdN in your project, include the `jqcdn.js` and `jqcdn.css` files in yo
 <head>
   <title>JQCdN Example</title>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jqcdn@10.6.0/jqcdn.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/jqcdn@10.6.0/jqcdn.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jqcdn@10.9.0/jqcdn.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jqcdn@10.9.0/jqcdn.min.js"></script>
 
 
 </head>
@@ -80,10 +80,10 @@ You can use JQCdN as a CDN by serving the files directly from this GitHub reposi
 **CSS:** `https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.4.0/jqcdn.css`
 
 
-**CSS:** `https://cdn.jsdelivr.net/npm/jqcdn@10.6.0/jqcdn.min.css`
+**CSS:** `https://cdn.jsdelivr.net/npm/jqcdn@10.9.0/jqcdn.min.css`
 
 
-**JavaScript:** `https://cdn.jsdelivr.net/npm/jqcdn@10.6.0/jqcdn.min.js`
+**JavaScript:** `https://cdn.jsdelivr.net/npm/jqcdn@10.9.0/jqcdn.min.js`
 
 **JavaScript:** `https://cdn.jsdelivr.net/gh/gtref/JQCdNv10.1.0@Version10.4.0/jqcdn.js`
 
