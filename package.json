@@ -1,0 +1,20 @@
+{
+  "name": "jqcdn",
+  "version": "1.0.0",
+  "description": "A CLI to scaffold a sample webpage using the JQCdN library.",
+  "main": "src/jqcdn.js",
+  "bin": {
+    "jqcdn": "bin/cli.js"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "keywords": [
+    "cli",
+    "scaffold",
+    "jqcdn"
+  ],
+  "author": "",
+  "license": "ISC"
+}
