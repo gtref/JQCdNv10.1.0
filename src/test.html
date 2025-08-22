@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JQCdN v1.10.0 Test Suite</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jqcdn@1.10.0/jqcdn.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jqcdn@1.10.0/jqcdn.min.js"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; padding: 20px; }
+        #results { border: 1px solid #ccc; padding: 10px; margin-top: 20px; }
+        .test-result { margin: 5px; padding: 10px; border-radius: 5px; border: 1px solid; }
+        .pass { background-color: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .fail { background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; }
+        h1, h2 { border-bottom: 1px solid #eee; padding-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>JQCdN v1.10.0 Test Suite</h1>
+    <div id="test-fixture" style="display:none;">
+        <div id="el1" class="foo bar">
+            <p class="child">Child 1</p>
+            <span class="child">Child 2</span>
+            <div class="foo-nested">
+                <p id="nested-p">Nested</p>
+            </div>
+        </div>
+        <div id="el2" class="foo">Sibling</div>
+        <button id="test-btn">Click Me</button>
+        <div id="delegation-test"><button class="delegated-btn">Delegated</button></div>
+        <div id="template-target"></div>
+        <div id="ajax-target"></div>
+        <input id="test-input" value="initial">
+    </div>
+    <h2>Results:</h2>
+    <div id="results"></div>
+
+    <script>
+        $(async function() {
+            const resultsContainer = $('#results');
+            let testsPassed = 0;
+            let testsFailed = 0;
+
+            async function runTest(description, testFn) {
+                const resultDiv = $('<div class="test-result"></div>');
+                try {
+                    const passed = await Promise.resolve(testFn());
+                    if (passed) {
+                        resultDiv.addClass('pass').text(`PASS: ${description}`);
+                        testsPassed++;
+                    } else { throw new Error('Assertion failed'); }
+                } catch (e) {
+                    resultDiv.addClass('fail').text(`FAIL: ${description} | Error: ${e.message}`);
+                    testsFailed++;
+                }
+                resultsContainer.append(resultDiv);
+            }
+
+            // --- Test Cases ---
+
+            await runTest('Selector selects by ID', () => $('#el1').length === 1);
+            await runTest('.addClass() adds a class', () => {
+                $('#el1').addClass('new-class');
+                return $('#el1').is('.new-class');
+            });
+            await runTest('.val() sets and gets a value', () => {
+                const input = $('#test-input').val('new value');
+                return input.val() === 'new value';
+            });
+            await runTest('.on() attaches a direct click listener', () => {
+                let clicked = false;
+                $('#test-btn').on('click', () => { clicked = true; });
+                $('#test-btn').elements[0].click();
+                return clicked;
+            });
+            await runTest('$.ajax() fetches data successfully', () => {
+                return new Promise(resolve => {
+                    $.ajax({
+                        url: 'https://jsonplaceholder.typicode.com/posts/1',
+                        success: (data) => {
+                            $('#ajax-target').text(data.title);
+                            resolve($('#ajax-target').text() === data.title);
+                        },
+                        error: () => resolve(false)
+                    });
+                });
+            });
+            await runTest('$.splashScreen() shows and hides', () => {
+                $.splashScreen('show');
+                const splash = document.getElementById('jqcdn-splash-screen');
+                const shown = splash && splash.style.display === 'flex';
+                $.splashScreen('hide');
+                return shown;
+            });
+
+            // Summary
+            const summary = $(`<h2>Tests Complete: ${testsPassed} passed, ${testsFailed} failed.</h2>`);
+            resultsContainer.prepend(summary);
+        });
+    </script>
+</body>
+</html>

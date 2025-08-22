@@ -1,6 +1,6 @@
 {
   "name": "jqcdn",
-  "version": "1.0.0",
+  "version": "1.10.0",
   "description": "A CLI to scaffold a sample webpage using the JQCdN library.",
   "main": "src/jqcdn.js",
   "bin": {
@@ -16,5 +16,9 @@
     "jqcdn"
   ],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^10.0.0",
+    "http-server": "^14.0.0"
+  }
 }
