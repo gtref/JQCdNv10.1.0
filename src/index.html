@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JQCdN To-Do App v10.6.0</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jqcdn@10.6.0/jqcdn.css">
-    <script src="https://cdn.jsdelivr.net/npm/jqcdn@10.6.0/jqcdn.js"></script>
+    <title>JQCdN To-Do App v1.10.0</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jqcdn@1.10.0/jqcdn.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jqcdn@1.10.0/jqcdn.min.js"></script>
     <style>
-        body { background-color: #f3f4f6; }
+        body { background-color: #f3f4f6; font-family: sans-serif; }
         .todo-item.completed .todo-text { text-decoration: line-through; color: #6c757d; }
     </style>
 </head>
 <body>
 
-    <div class="card" style="width: 450px; margin: auto;">
+    <div class="card" style="width: 450px; margin: 3rem auto;">
         <div class="card-body">
-            <h1 class="card-title text-xl font-bold text-center">My To-Do List</h1>
+            <div class="d-flex justify-between items-center">
+                <h1 class="card-title text-xl font-bold">My To-Do List</h1>
+                <button id="help-btn" class="btn">Help</button>
+            </div>
 
             <div id="error-alert" class="alert alert-danger d-none" role="alert">
               Please enter a task.
@@ -32,31 +35,48 @@
         </div>
     </div>
 
+    <!-- Help Modal -->
+    <div id="help-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">How to Use</h5>
+                <button id="close-modal-btn" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p> - Enter a task in the input field and click 'Add' to add it to the list.</p>
+                <p> - Click on a task's text to mark it as completed.</p>
+                <p> - Click the 'X' button to delete a task.</p>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Show splash screen immediately
         $.splashScreen('show');
 
         $(function() {
-            // Hide splash screen once DOM is ready and app logic is about to run
+            // Hide splash screen once DOM is ready
             $.splashScreen('hide');
 
+            // App Logic
             const form = $('#todo-form');
             const input = $('#todo-input');
             const list = $('#todo-list');
             const errorAlert = $('#error-alert');
+            const helpBtn = $('#help-btn');
+            const helpModal = $('#help-modal');
+            const closeModalBtn = $('#close-modal-btn');
 
             const todoTemplate = (text) => `
-                <li class="todo-item d-flex justify-between items-center p-2 border-bottom">
+                <li class="todo-item d-flex justify-between items-center p-2 border">
                     <span class="todo-text flex-grow" style="cursor: pointer;">${text}</span>
-                    <button class="delete-btn btn btn-danger">X</button>
+                    <button class="delete-btn btn btn-danger btn-sm">X</button>
                 </li>
             `;
 
-            // Add a new to-do item
             form.on('submit', function(e) {
                 e.preventDefault();
                 const todoText = input.val().trim();
-
                 if (todoText) {
                     errorAlert.addClass('d-none');
                     list.append(todoTemplate(todoText));
@@ -66,13 +86,21 @@
                 }
             });
 
-            // Event delegation for complete and delete actions
             list.on('click', '.todo-text', function() {
                 $(this).parent().toggleClass('completed');
             });
 
             list.on('click', '.delete-btn', function() {
                 $(this).closest('li').remove();
+            });
+
+            // Modal Logic
+            helpBtn.on('click', () => helpModal.fadeIn());
+            closeModalBtn.on('click', () => helpModal.fadeOut());
+            helpModal.on('click', function(e) {
+                if (e.target === this) {
+                    $(this).fadeOut();
+                }
             });
         });
     </script>
