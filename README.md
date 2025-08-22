@@ -1,6 +1,6 @@
 [![](https://data.jsdelivr.com/v1/package/npm/jqcdn/badge)](https://www.jsdelivr.com/package/npm/jqcdn) [![GitHub forks](https://img.shields.io/github/forks/gtref/JQCdNv10.1.0?style=social)](https://github.com/gtref/JQCdNv10.1.0/network) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/gtref/JQCdNv10.1.0)
 
-# JQCdN v1.10.0: CLI & Browser Library
+# JQCdN v1.11.0: CLI & Browser Library
 
 JQCdN is a dual-purpose project providing a powerful, lightweight browser library (like jQuery) and a command-line tool (CLI) to manage your web projects.
 
@@ -41,8 +41,8 @@ The CLI scaffolds a project that uses the JQCdN browser library. It's a modern a
 
 Use the following versioned links from the jsDelivr npm CDN for stability:
 
--   **CSS:** `https://cdn.jsdelivr.net/npm/jqcdn@1.10.0/jqcdn.min.css`
--   **JavaScript:** `https://cdn.jsdelivr.net/npm/jqcdn@1.10.0/jqcdn.min.js`
+-   **CSS:** `https://cdn.jsdelivr.net/npm/jqcdn@1.11.0/jqcdn.min.css`
+-   **JavaScript:** `https://cdn.jsdelivr.net/npm/jqcdn@1.11.0/jqcdn.min.js`
 
 ### API Reference
 
